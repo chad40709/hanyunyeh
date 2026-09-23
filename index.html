@@ -251,7 +251,25 @@
 #__framer-editorbar.status_measuring {
     clip-path: unset;
 }
-</style></head>
+</style>
+<script>
+  // 頁面載入後自動攔截並銷毀 Lenis 滾動實例
+  window.addEventListener('DOMContentLoaded', () => {
+    // 移除 Lenis 在 html/body 上的鎖定 class
+    document.documentElement.classList.remove('lenis', 'lenis-smooth', 'lenis-stopped');
+    document.body.classList.remove('lenis', 'lenis-smooth', 'lenis-stopped');
+
+    // 如果 Lenis 實例存在，直接銷毀它
+    if (window.lenis) {
+      window.lenis.destroy();
+    }
+
+    // 阻止 Lenis 繼續攔截事件
+    window.addEventListener('wheel', (e) => e.stopPropagation(), { capture: true });
+    window.addEventListener('touchmove', (e) => e.stopPropagation(), { capture: true });
+  }, true);
+</script>
+</head>
 <body>
 	<script async="" src="https://events.framer.com/script?v=2" data-fid="d155a75b51f7cb4d397efeecda0cf6ebec9a16a4003f7e6da1da355d32938f03" data-no-nt=""></script>
 	<!-- Start of bodyStart -->
